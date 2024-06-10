@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Define variables from environment
+AWS_DEFAULT_REGION="us-east-2"
+IMAGE_REPO_NAME="todo-app"
+IMAGE_TAG="latest"
+CONTAINER_NAME="my-app"
+IMAGE_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+
+# Log in to ECR
+aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
+
+# Stop and remove the old container if it exists
+if [ "$(docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
+  docker rm -f $CONTAINER_NAME
+fi
+
+# Run the new container with the latest image
+docker run -d --name $CONTAINER_NAME -p 8000:8000 --pull always $IMAGE_URI
