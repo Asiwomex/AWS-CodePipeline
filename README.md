@@ -1,4 +1,4 @@
-# Deploying a Django todo app onto an EC2 using CodeCommit, CodeBuild, CodeDeploy and CodePipeline
+# Deploying a Dockerized Django todo api onto an EC2 using CodeCommit, CodeBuild, CodeDeploy and CodePipeline
 
 In this work, a django todo app will be commited to CodeCommit, built into an image using CodeBuild and saved in a container, ECR. This will then be deployed onto an instance using CodeDeploy with CodePipeline being used for the CI/CD process. The buildspec.yml, appspec.yml and scripts are provided in the repo.
 ## The following Services will be used
